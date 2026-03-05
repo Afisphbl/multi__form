@@ -85,6 +85,7 @@ const PAYMENT_INFO_DATA = [
     id: "expiryDate",
     label: "Expiry Date",
     type: "date",
+    min: new Date().toISOString().split("T")[0],
     title: "Expiry date is required",
     required: true,
   },

@@ -30,6 +30,12 @@ export const ContextProvider = ({ children }) => {
     street: "",
     zipcode: "",
   });
+  const [paymentInfo, setPaymentInfo] = useState({
+    cardHolderName: "",
+    cardNumber: "",
+    expiryDate: "",
+    cvv: "",
+  });
   const [isNextDisabled, setIsNextDisabled] = useState(true);
   const [step, setStep] = useState(1);
 
@@ -43,6 +49,10 @@ export const ContextProvider = ({ children }) => {
 
   function updateAddressInfo(info) {
     setAddressInfo((prevInfo) => ({ ...prevInfo, ...info }));
+  }
+
+  function updatePaymentInfo(info) {
+    setPaymentInfo((prevInfo) => ({ ...prevInfo, ...info }));
   }
 
   function toggleNextButton() {
@@ -66,25 +76,50 @@ export const ContextProvider = ({ children }) => {
   useEffect(() => {
     const { firstName, lastName, email, phone } = personalInfo;
     const { country, city, street, zipcode } = addressInfo;
-    if (
-      firstName &&
-      firstName.length >= 3 &&
-      lastName &&
-      lastName.length >= 3 &&
-      email &&
-      email.includes("@") &&
-      email.endsWith(".com") &&
-      phone &&
-      phone.length === 10 &&
-      Number(phone)
-    ) {
-      setIsNextDisabled(false);
-    } else if (country && city && street && zipcode && Number(zipcode)) {
-      setIsNextDisabled(false);
+    const { cardHolderName, cardNumber, expiryDate, cvv } = paymentInfo;
+
+    if (step === 1) {
+      if (
+        firstName &&
+        firstName.length >= 3 &&
+        lastName &&
+        lastName.length >= 3 &&
+        email &&
+        email.includes("@") &&
+        email.endsWith(".com") &&
+        phone &&
+        phone.length === 10 &&
+        Number(phone)
+      ) {
+        setIsNextDisabled(false);
+      } else {
+        setIsNextDisabled(true);
+      }
+    } else if (step === 2) {
+      if (country && city && street && zipcode && Number(zipcode)) {
+        setIsNextDisabled(false);
+      } else {
+        setIsNextDisabled(true);
+      }
+    } else if (step === 3) {
+      if (
+        cardHolderName === `${firstName} ${lastName}` &&
+        cardNumber &&
+        cardNumber.length === 16 &&
+        Number(cardNumber) &&
+        expiryDate &&
+        cvv &&
+        cvv.length === 3 &&
+        Number(cvv)
+      ) {
+        setIsNextDisabled(false);
+      } else {
+        setIsNextDisabled(true);
+      }
     } else {
       setIsNextDisabled(true);
     }
-  }, [personalInfo, addressInfo]);
+  }, [step, personalInfo, addressInfo, paymentInfo]);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -96,11 +131,13 @@ export const ContextProvider = ({ children }) => {
         theme,
         personalInfo,
         addressInfo,
+        paymentInfo,
         isNextDisabled,
         step,
         toggleTheme,
         updatePersonalInfo,
         updateAddressInfo,
+        updatePaymentInfo,
         onNextHandler,
         onBackHandler,
       }}

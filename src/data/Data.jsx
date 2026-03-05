@@ -1,3 +1,5 @@
+import { type } from "@testing-library/user-event/dist/type";
+
 const PersonalInfoData = [
   {
     id: "firstName",
@@ -64,4 +66,35 @@ const ADDRESS_INFO_DATA = [
   },
 ];
 
-export { PersonalInfoData, ADDRESS_INFO_DATA };
+const PAYMENT_INFO_DATA = [
+  {
+    id: "cardHolderName",
+    label: "Card Holder Name",
+    placeholder: "Enter the name on the card",
+    title: "Card holder name is required",
+    required: true,
+  },
+  {
+    id: "cardNumber",
+    label: "Card Number",
+    placeholder: "1234 5678 9012 3456",
+    title: "Card number is required",
+    required: true,
+  },
+  {
+    id: "expiryDate",
+    label: "Expiry Date",
+    type: "date",
+    title: "Expiry date is required",
+    required: true,
+  },
+  {
+    id: "cvv",
+    label: "CVV",
+    placeholder: "123",
+    title: "CVV is required",
+    required: true,
+  },
+];
+
+export { PersonalInfoData, ADDRESS_INFO_DATA, PAYMENT_INFO_DATA };

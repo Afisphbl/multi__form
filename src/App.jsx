@@ -5,6 +5,7 @@ import ProgressBar from "./components/progressBar/ProgressBar";
 import NavigationButtons from "./components/Navigation/NavigationButtons";
 import PersonalPage from "./Pages/PersonalPage";
 import AddressPage from "./Pages/AddressPage";
+import PaymentPage from "./Pages/PaymentPage";
 
 function App() {
   const { isNextDisabled, step, onNextHandler, onBackHandler } =
@@ -25,6 +26,7 @@ function App() {
         <Routes>
           <Route path="/step-1" element={<PersonalPage />} />
           <Route path="/step-2" element={<AddressPage />} />
+          <Route path="/step-3" element={<PaymentPage />} />
         </Routes>
         <NavigationButtons
           isVisible={isBackVisible}

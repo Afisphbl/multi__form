@@ -1,0 +1,43 @@
+.summary-content {
+  margin-top: 1.5rem;
+}
+
+.summary-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: var(--bg-section);
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+  transition: all 0.3s;
+}
+
+.summary-section h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--primary);
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 0.5rem;
+  transition:
+    color 0.3s,
+    border-bottom-color 0.3s;
+}
+
+.summary-section p {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-label);
+  display: flex;
+  justify-content: space-between;
+  transition: color 0.3s;
+}
+
+.summary-section p strong {
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.summary-section p span {
+  font-weight: 500;
+  color: var(--text-main);
+}

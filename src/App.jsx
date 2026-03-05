@@ -6,6 +6,7 @@ import NavigationButtons from "./components/Navigation/NavigationButtons";
 import PersonalPage from "./Pages/PersonalPage";
 import AddressPage from "./Pages/AddressPage";
 import PaymentPage from "./Pages/PaymentPage";
+import Summary from "./Pages/Summary";
 
 function App() {
   const { isNextDisabled, step, onNextHandler, onBackHandler } =
@@ -27,12 +28,14 @@ function App() {
           <Route path="/step-1" element={<PersonalPage />} />
           <Route path="/step-2" element={<AddressPage />} />
           <Route path="/step-3" element={<PaymentPage />} />
+          <Route path="/step-4" element={<Summary />} />
         </Routes>
         <NavigationButtons
           isVisible={isBackVisible}
           isNextDisabled={isNextDisabled}
           onNext={onNextHandler}
           onBack={onBackHandler}
+          step={step}
         />
       </main>
     </article>

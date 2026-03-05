@@ -1,70 +1,136 @@
-# Getting Started with Create React App
+# Multi-Step Form Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A responsive multi-step form built with React, React Router, and Context API.
 
-## Available Scripts
+The app guides users through:
 
-In the project directory, you can run:
+1. Personal information
+2. Address information
+3. Payment information
+4. Final summary
 
-### `npm start`
+It also includes a light/dark theme toggle with persistence via `localStorage`.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Four-step form flow with route-based pages (`/step-1` to `/step-4`)
+- Shared state management using React Context
+- Dynamic progress bar and active step indicators
+- Step-by-step validation that enables/disables the `Next` button
+- Back/Next navigation controls
+- Final summary view with masked card number
+- Theme toggle (`light` / `dark`) saved in `localStorage`
+- Responsive card layout and animated UI transitions
 
-### `npm test`
+## Validation Rules
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Step 1 (Personal):
 
-### `npm run build`
+1. `firstName` and `lastName` must be at least 3 characters
+2. `email` must include `@` and end with `.com`
+3. `phone` must be numeric and 10 digits
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Step 2 (Address):
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. `country`, `city`, and `street` are required
+2. `zipcode` is required and must be numeric
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Step 3 (Payment):
 
-### `npm run eject`
+1. `cardHolderName` must match `firstName + " " + lastName`
+2. `cardNumber` must be numeric and 16 digits
+3. `expiryDate` is required
+4. `cvv` must be numeric and 3 digits
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Tech Stack
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- React
+- React Router DOM
+- Context API + custom hooks
+- Create React App (`react-scripts`)
+- CSS modules/files for component styling
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Project Structure
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```text
+src/
+	App.jsx
+	index.jsx
+	index.css
+	context/
+		useContextApi.jsx
+	custom/
+		useData.jsx
+		useInput.jsx
+	data/
+		Data.jsx
+	Pages/
+		PersonalPage.jsx
+		AddressPage.jsx
+		PaymentPage.jsx
+		Summary.jsx
+		Summary.css
+	components/
+		Input/
+			InputField.jsx
+			InputField.css
+		Navigation/
+			NavigationButtons.jsx
+			NavigationButtons.css
+		progressBar/
+			ProgressBar.jsx
+			ProgressBar.css
+		toggleTheme/
+			ToggleTheme.jsx
+			ThemeToggle.css
+		button/
+			Button.jsx
+```
 
-## Learn More
+## Getting Started
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Prerequisites
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Node.js 18+
+- npm 9+
 
-### Code Splitting
+### Install Dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+npm install
+```
 
-### Analyzing the Bundle Size
+### Run Development Server
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+npm start
+```
 
-### Making a Progressive Web App
+App runs at `http://localhost:3000`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Scripts
 
-### Advanced Configuration
+- `npm start`: Start development server
+- `npm run build`: Create production build
+- `npm test`: Run tests in watch mode
+- `npm run eject`: Eject CRA configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## How It Works
 
-### Deployment
+- `ContextProvider` stores form data, current step, theme, and navigation actions.
+- `useData` validates the current step and controls the `Next` button state.
+- `App.jsx` listens to `step` and navigates to the corresponding route.
+- Input pages render fields from `src/data/Data.jsx` to keep form definitions centralized.
+- `Summary.jsx` displays all entered values, masking card number except last 4 digits.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Notes
 
-### `npm run build` fails to minify
+- Theme is applied using a `data-theme` attribute on the root element.
+- The `Back` button is hidden on step 1 and `Next` is hidden on step 4.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Future Improvements
+
+- Add field-level error messages (not just disabled `Next`)
+- Support more flexible email validation patterns
+- Add persistence for form data across page refresh
+- Add unit/integration tests for validation and navigation

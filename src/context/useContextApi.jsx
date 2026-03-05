@@ -34,6 +34,10 @@ export const ContextProvider = ({ children }) => {
     setPersonalInfo((prevInfo) => ({ ...prevInfo, ...info }));
   }
 
+  function toggleNextButton() {
+    setIsNextDisabled((prevState) => !prevState);
+  }
+
   useEffect(() => {
     const { firstName, lastName, email, phone } = personalInfo;
     if (
@@ -66,6 +70,7 @@ export const ContextProvider = ({ children }) => {
         isNextDisabled,
         toggleTheme,
         updatePersonalInfo,
+        toggleNextButton,
       }}
     >
       {children}

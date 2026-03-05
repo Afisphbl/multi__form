@@ -1,4 +1,5 @@
-import Data from "../data/Data";
+import React from "react";
+import { PersonalInfoData } from "../data/Data";
 import { useContextApi } from "../context/useContextApi";
 import InputField from "../components/Input/InputField";
 
@@ -8,7 +9,7 @@ function PersonalPage() {
   return (
     <>
       <h2>Personal Information</h2>
-      {Data[0].map((input) => (
+      {PersonalInfoData.map((input) => (
         <InputField
           key={input.id}
           {...input}

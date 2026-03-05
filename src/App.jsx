@@ -7,7 +7,8 @@ import PersonalPage from "./Pages/PersonalPage";
 import AddressPage from "./Pages/AddressPage";
 
 function App() {
-  const { isNextDisabled, toggleNextButton } = useContextApi();
+  const { isNextDisabled, toggleNextButton, onBackButtonClicked } =
+    useContextApi();
   const [step, setStep] = useState(1);
   const [isBackVisible, setIsBackVisible] = useState(false);
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function App() {
 
   function onBackHandler() {
     setStep((prevStep) => prevStep - 1);
-    toggleNextButton();
+    onBackButtonClicked();
   }
 
   useEffect(() => {

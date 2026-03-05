@@ -78,7 +78,7 @@ const PAYMENT_INFO_DATA = [
     id: "cardNumber",
     label: "Card Number",
     placeholder: "1234 5678 9012 3456",
-    title: "Card number is required",
+    title: "Card number is required and should be 16 digits long",
     required: true,
   },
   {
@@ -92,8 +92,9 @@ const PAYMENT_INFO_DATA = [
   {
     id: "cvv",
     label: "CVV",
+    type: "password",
     placeholder: "123",
-    title: "CVV is required",
+    title: "CVV is required and should be 3 digits long",
     required: true,
   },
 ];

@@ -3,18 +3,13 @@ import React, {
   use,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 
-const ThemeContext = createContext();
-const PersonalInfoContext = createContext();
+import { useData } from "../custom/useData";
 
 const DataContext = createContext();
-
-const value = {
-  themeContext: ThemeContext,
-  personalInfoContext: PersonalInfoContext,
-};
 
 export const ContextProvider = ({ children }) => {
   const [theme, setTheme] = useState("light");
@@ -38,6 +33,7 @@ export const ContextProvider = ({ children }) => {
   });
   const [isNextDisabled, setIsNextDisabled] = useState(true);
   const [step, setStep] = useState(1);
+  // const step = useRef(1);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
@@ -65,61 +61,24 @@ export const ContextProvider = ({ children }) => {
 
   function onNextHandler() {
     setStep((prevStep) => prevStep + 1);
+    // step.current += 1;
     toggleNextButton();
   }
 
   function onBackHandler() {
     setStep((prevStep) => prevStep - 1);
+    // step.current -= 1;
     onBackButtonClicked();
+    // console.log(step.current)
   }
 
-  useEffect(() => {
-    const { firstName, lastName, email, phone } = personalInfo;
-    const { country, city, street, zipcode } = addressInfo;
-    const { cardHolderName, cardNumber, expiryDate, cvv } = paymentInfo;
-
-    if (step === 1) {
-      if (
-        firstName &&
-        firstName.length >= 3 &&
-        lastName &&
-        lastName.length >= 3 &&
-        email &&
-        email.includes("@") &&
-        email.endsWith(".com") &&
-        phone &&
-        phone.length === 10 &&
-        Number(phone)
-      ) {
-        setIsNextDisabled(false);
-      } else {
-        setIsNextDisabled(true);
-      }
-    } else if (step === 2) {
-      if (country && city && street && zipcode && Number(zipcode)) {
-        setIsNextDisabled(false);
-      } else {
-        setIsNextDisabled(true);
-      }
-    } else if (step === 3) {
-      if (
-        cardHolderName === `${firstName} ${lastName}` &&
-        cardNumber &&
-        cardNumber.length === 16 &&
-        Number(cardNumber) &&
-        expiryDate &&
-        cvv &&
-        cvv.length === 3 &&
-        Number(cvv)
-      ) {
-        setIsNextDisabled(false);
-      } else {
-        setIsNextDisabled(true);
-      }
-    } else {
-      setIsNextDisabled(true);
-    }
-  }, [step, personalInfo, addressInfo, paymentInfo]);
+  useData({
+    step,
+    setIsNextDisabled,
+    personalInfo,
+    addressInfo,
+    paymentInfo,
+  });
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);

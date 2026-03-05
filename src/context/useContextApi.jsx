@@ -31,6 +31,7 @@ export const ContextProvider = ({ children }) => {
     zipcode: "",
   });
   const [isNextDisabled, setIsNextDisabled] = useState(true);
+  const [step, setStep] = useState(1);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
@@ -50,6 +51,16 @@ export const ContextProvider = ({ children }) => {
 
   function onBackButtonClicked() {
     setIsNextDisabled(false);
+  }
+
+  function onNextHandler() {
+    setStep((prevStep) => prevStep + 1);
+    toggleNextButton();
+  }
+
+  function onBackHandler() {
+    setStep((prevStep) => prevStep - 1);
+    onBackButtonClicked();
   }
 
   useEffect(() => {
@@ -86,11 +97,12 @@ export const ContextProvider = ({ children }) => {
         personalInfo,
         addressInfo,
         isNextDisabled,
+        step,
         toggleTheme,
         updatePersonalInfo,
         updateAddressInfo,
-        toggleNextButton,
-        onBackButtonClicked,
+        onNextHandler,
+        onBackHandler,
       }}
     >
       {children}

@@ -1,18 +1,17 @@
-import React, {
-  createContext,
-  use,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 import { useData } from "../custom/useData";
 
 const DataContext = createContext();
 
 export const ContextProvider = ({ children }) => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(() => {
+    const storedTheme = localStorage.getItem("theme");
+
+    if (storedTheme) return JSON.parse(storedTheme);
+
+    return "light";
+  });
   const [personalInfo, setPersonalInfo] = useState({
     firstName: "",
     lastName: "",
@@ -33,7 +32,6 @@ export const ContextProvider = ({ children }) => {
   });
   const [isNextDisabled, setIsNextDisabled] = useState(true);
   const [step, setStep] = useState(1);
-  // const step = useRef(1);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
@@ -61,15 +59,12 @@ export const ContextProvider = ({ children }) => {
 
   function onNextHandler() {
     setStep((prevStep) => prevStep + 1);
-    // step.current += 1;
     toggleNextButton();
   }
 
   function onBackHandler() {
     setStep((prevStep) => prevStep - 1);
-    // step.current -= 1;
     onBackButtonClicked();
-    // console.log(step.current)
   }
 
   useData({
@@ -82,6 +77,7 @@ export const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", JSON.stringify(theme));
   }, [theme]);
 
   return (

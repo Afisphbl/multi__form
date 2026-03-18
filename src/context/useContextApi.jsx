@@ -1,8 +1,56 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  use,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 
 import { useData } from "../custom/useData";
 
+const initialState = {
+  personalInfo1: { firstName: "", lastName: "", email: "", phone: "" },
+
+  addressInfo1: { country: "", city: "", street: "", zipcode: "" },
+
+  paymentInfo1: { cardHolderName: "", cardNumber: "", expiryDate: "", cvv: "" },
+};
 const DataContext = createContext();
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "personalInfo":
+      return {
+        ...state,
+        personalInfo1: {
+          ...state.personalInfo1,
+          ...action.payload,
+        },
+      };
+
+    case "addressInfo":
+      return {
+        ...state,
+        addressInfo1: {
+          ...state.addressInfo1,
+          ...action.payload,
+        },
+      };
+
+    case "paymentInfo":
+      return {
+        ...state,
+        paymentInfo1: {
+          ...state.paymentInfo1,
+          ...action.payload,
+        },
+      };
+
+    default:
+      throw new Error(`Unhandled action type: ${action.type}`);
+  }
+};
 
 export const ContextProvider = ({ children }) => {
   const [theme, setTheme] = useState(() => {
@@ -12,24 +60,8 @@ export const ContextProvider = ({ children }) => {
 
     return "light";
   });
-  const [personalInfo, setPersonalInfo] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-  });
-  const [addressInfo, setAddressInfo] = useState({
-    country: "",
-    city: "",
-    street: "",
-    zipcode: "",
-  });
-  const [paymentInfo, setPaymentInfo] = useState({
-    cardHolderName: "",
-    cardNumber: "",
-    expiryDate: "",
-    cvv: "",
-  });
+
+  const [state, dispatch] = useReducer(reducer, initialState);
   const [isNextDisabled, setIsNextDisabled] = useState(true);
   const [step, setStep] = useState(1);
 
@@ -38,15 +70,15 @@ export const ContextProvider = ({ children }) => {
   };
 
   function updatePersonalInfo(info) {
-    setPersonalInfo((prevInfo) => ({ ...prevInfo, ...info }));
+    dispatch({ type: "personalInfo", payload: info });
   }
 
   function updateAddressInfo(info) {
-    setAddressInfo((prevInfo) => ({ ...prevInfo, ...info }));
+    dispatch({ type: "addressInfo", payload: info });
   }
 
   function updatePaymentInfo(info) {
-    setPaymentInfo((prevInfo) => ({ ...prevInfo, ...info }));
+    dispatch({ type: "paymentInfo", payload: info });
   }
 
   function toggleNextButton() {
@@ -69,10 +101,8 @@ export const ContextProvider = ({ children }) => {
 
   useData({
     step,
+    state,
     setIsNextDisabled,
-    personalInfo,
-    addressInfo,
-    paymentInfo,
   });
 
   useEffect(() => {
@@ -84,11 +114,9 @@ export const ContextProvider = ({ children }) => {
     <DataContext.Provider
       value={{
         theme,
-        personalInfo,
-        addressInfo,
-        paymentInfo,
         isNextDisabled,
         step,
+        state,
         toggleTheme,
         updatePersonalInfo,
         updateAddressInfo,

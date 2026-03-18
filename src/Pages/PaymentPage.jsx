@@ -5,7 +5,10 @@ import { useContextApi } from "../context/useContextApi";
 import InputField from "../components/Input/InputField";
 
 function PaymentPage() {
-  const { paymentInfo, updatePaymentInfo } = useContextApi();
+  const {
+    state: { paymentInfo1 },
+    updatePaymentInfo,
+  } = useContextApi();
   const { handleInputChange } = useInput(updatePaymentInfo);
   return (
     <>
@@ -14,7 +17,7 @@ function PaymentPage() {
         <InputField
           key={input.id}
           {...input}
-          value={paymentInfo[input.id]}
+          value={paymentInfo1[input.id]}
           onChange={(e) => handleInputChange(e, input.id)}
         />
       ))}

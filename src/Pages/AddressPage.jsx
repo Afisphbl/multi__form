@@ -5,7 +5,10 @@ import { useContextApi } from "../context/useContextApi";
 import InputField from "../components/Input/InputField";
 
 function AddressPage() {
-  const { addressInfo, updateAddressInfo } = useContextApi();
+  const {
+    state: { addressInfo1 },
+    updateAddressInfo,
+  } = useContextApi();
 
   const { handleInputChange } = useInput(updateAddressInfo);
   return (
@@ -15,7 +18,7 @@ function AddressPage() {
         <InputField
           key={input.id}
           {...input}
-          value={addressInfo[input.id]}
+          value={addressInfo1[input.id]}
           onChange={(e) => handleInputChange(e, input.id)}
         />
       ))}

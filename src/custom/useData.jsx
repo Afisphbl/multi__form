@@ -3,14 +3,12 @@ import { useEffect } from "react";
 export function useData({
   step,
   setIsNextDisabled,
-  personalInfo,
-  addressInfo,
-  paymentInfo,
+  state: { personalInfo1, addressInfo1, paymentInfo1 },
 }) {
   useEffect(() => {
-    const { firstName, lastName, email, phone } = personalInfo;
-    const { country, city, street, zipcode } = addressInfo;
-    const { cardHolderName, cardNumber, expiryDate, cvv } = paymentInfo;
+    const { firstName, lastName, email, phone } = personalInfo1;
+    const { country, city, street, zipcode } = addressInfo1;
+    const { cardHolderName, cardNumber, expiryDate, cvv } = paymentInfo1;
 
     if (step === 1) {
       if (
@@ -53,7 +51,7 @@ export function useData({
     } else {
       setIsNextDisabled(true);
     }
-  }, [step, personalInfo, addressInfo, paymentInfo, setIsNextDisabled]);
+  }, [step, personalInfo1, addressInfo1, paymentInfo1, setIsNextDisabled]);
 
   return { setIsNextDisabled, step };
 }

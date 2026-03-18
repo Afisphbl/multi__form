@@ -18,7 +18,6 @@ function App() {
     navigate(`/step-${step}`);
 
     step === 1 ? setIsBackVisible(false) : setIsBackVisible(true);
-    console.log(step);
   }, [step, navigate]);
 
   return (

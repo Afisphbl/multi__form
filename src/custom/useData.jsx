@@ -1,10 +1,9 @@
 import { useEffect } from "react";
 
 export function useData({
-  step,
   onForwardHandler,
   onBackButtonClicked1,
-  state: { personalInfo1, addressInfo1, paymentInfo1 },
+  state: { personalInfo1, addressInfo1, paymentInfo1, step },
 }) {
   useEffect(() => {
     const { firstName, lastName, email, phone } = personalInfo1;
@@ -61,5 +60,5 @@ export function useData({
     onBackButtonClicked1,
   ]);
 
-  return { step };
+  return { state: { personalInfo1, addressInfo1, paymentInfo1, step } };
 }

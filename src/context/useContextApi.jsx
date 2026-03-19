@@ -16,6 +16,8 @@ const initialState = {
 
   paymentInfo1: { cardHolderName: "", cardNumber: "", expiryDate: "", cvv: "" },
 
+  step: 1,
+
   isNextDisabled: true,
 };
 const DataContext = createContext();
@@ -62,6 +64,14 @@ const reducer = (state, action) => {
       return {
         ...state,
         isNextDisabled: !state.isNextDisabled,
+        step: state.step + 1,
+      };
+
+    case "toggleBackButton":
+      return {
+        ...state,
+        isNextDisabled: !state.isNextDisabled,
+        step: state.step - 1,
       };
 
     case "nextButton":
@@ -75,6 +85,7 @@ const reducer = (state, action) => {
         ...state,
         isNextDisabled: false,
       };
+
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
@@ -90,7 +101,6 @@ export const ContextProvider = ({ children }) => {
   });
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [step, setStep] = useState(1);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
@@ -109,7 +119,6 @@ export const ContextProvider = ({ children }) => {
   }
 
   function onNextHandler() {
-    setStep((prevStep) => prevStep + 1);
     dispatch({ type: "toggleNextButton" });
   }
 
@@ -122,12 +131,10 @@ export const ContextProvider = ({ children }) => {
   }, []);
 
   function onBackHandler() {
-    setStep((prevStep) => prevStep - 1);
-    dispatch({ type: "toggleNextButton" });
+    dispatch({ type: "toggleBackButton" });
   }
 
   useData({
-    step,
     state,
     onForwardHandler,
     onBackButtonClicked1,
@@ -142,7 +149,6 @@ export const ContextProvider = ({ children }) => {
     <DataContext.Provider
       value={{
         theme,
-        step,
         state,
         toggleTheme,
         updatePersonalInfo,

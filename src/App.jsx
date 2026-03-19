@@ -10,8 +10,7 @@ import Summary from "./Pages/Summary";
 
 function App() {
   const {
-    state: { isNextDisabled },
-    step,
+    state: { step, isNextDisabled },
     onNextHandler,
     onBackHandler,
   } = useContextApi();

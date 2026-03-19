@@ -1,12 +1,12 @@
 import React from "react";
 import { useInput } from "../custom/useInput";
-import { ADDRESS_INFO_DATA } from "../data/Data";
+import { ADDRESS_FIELDS } from "../data/Data";
 import { useContextApi } from "../context/useContextApi";
 import InputField from "../components/Input/InputField";
 
 function AddressPage() {
   const {
-    state: { addressInfo1 },
+    state: { addressInfo },
     updateAddressInfo,
   } = useContextApi();
 
@@ -14,12 +14,12 @@ function AddressPage() {
   return (
     <>
       <h2>Address Information</h2>
-      {ADDRESS_INFO_DATA.map((input) => (
+      {ADDRESS_FIELDS.map((field) => (
         <InputField
-          key={input.id}
-          {...input}
-          value={addressInfo1[input.id]}
-          onChange={(e) => handleInputChange(e, input.id)}
+          key={field.id}
+          {...field}
+          value={addressInfo[field.id]}
+          onChange={(event) => handleInputChange(event, field.id)}
         />
       ))}
     </>

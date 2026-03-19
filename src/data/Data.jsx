@@ -1,4 +1,4 @@
-const PersonalInfoData = [
+const PERSONAL_INFO_FIELDS = [
   {
     id: "firstName",
     label: "First Name",
@@ -30,7 +30,7 @@ const PersonalInfoData = [
   },
 ];
 
-const ADDRESS_INFO_DATA = [
+const ADDRESS_FIELDS = [
   {
     id: "country",
     label: "Country",
@@ -64,7 +64,7 @@ const ADDRESS_INFO_DATA = [
   },
 ];
 
-const PAYMENT_INFO_DATA = [
+const PAYMENT_FIELDS = [
   {
     id: "cardHolderName",
     label: "Card Holder Name",
@@ -97,4 +97,4 @@ const PAYMENT_INFO_DATA = [
   },
 ];
 
-export { PersonalInfoData, ADDRESS_INFO_DATA, PAYMENT_INFO_DATA };
+export { PERSONAL_INFO_FIELDS, ADDRESS_FIELDS, PAYMENT_FIELDS };

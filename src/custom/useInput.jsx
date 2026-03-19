@@ -1,7 +1,7 @@
 export function useInput(updateInfo) {
-  function handleInputChange(e, name) {
-    const { value } = e.target;
-    updateInfo({ [name]: value });
+  function handleInputChange(event, fieldName) {
+    const { value } = event.target;
+    updateInfo({ [fieldName]: value });
   }
 
   return { handleInputChange };

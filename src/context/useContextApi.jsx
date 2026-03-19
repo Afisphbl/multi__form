@@ -10,11 +10,11 @@ import React, {
 import { useData } from "../custom/useData";
 
 const initialState = {
-  personalInfo1: { firstName: "", lastName: "", email: "", phone: "" },
+  personalInfo: { firstName: "", lastName: "", email: "", phone: "" },
 
-  addressInfo1: { country: "", city: "", street: "", zipcode: "" },
+  addressInfo: { country: "", city: "", street: "", zipcode: "" },
 
-  paymentInfo1: { cardHolderName: "", cardNumber: "", expiryDate: "", cvv: "" },
+  paymentInfo: { cardHolderName: "", cardNumber: "", expiryDate: "", cvv: "" },
 
   step: 1,
 
@@ -24,63 +24,63 @@ const DataContext = createContext();
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "personalInfo": {
+    case "updatePersonalInfo": {
       const updatedPersonalInfo = {
-        ...state.personalInfo1,
+        ...state.personalInfo,
         ...action.payload,
       };
 
       return {
         ...state,
-        personalInfo1: updatedPersonalInfo,
+        personalInfo: updatedPersonalInfo,
       };
     }
 
-    case "addressInfo": {
+    case "updateAddressInfo": {
       const updatedAddressInfo = {
-        ...state.addressInfo1,
+        ...state.addressInfo,
         ...action.payload,
       };
 
       return {
         ...state,
-        addressInfo1: updatedAddressInfo,
+        addressInfo: updatedAddressInfo,
       };
     }
 
-    case "paymentInfo": {
+    case "updatePaymentInfo": {
       const updatedPaymentInfo = {
-        ...state.paymentInfo1,
+        ...state.paymentInfo,
         ...action.payload,
       };
 
       return {
         ...state,
-        paymentInfo1: updatedPaymentInfo,
+        paymentInfo: updatedPaymentInfo,
       };
     }
 
-    case "toggleNextButton":
+    case "goToNextStep":
       return {
         ...state,
         isNextDisabled: !state.isNextDisabled,
         step: state.step + 1,
       };
 
-    case "toggleBackButton":
+    case "goToPreviousStep":
       return {
         ...state,
         isNextDisabled: !state.isNextDisabled,
         step: state.step - 1,
       };
 
-    case "nextButton":
+    case "disableNextButton":
       return {
         ...state,
         isNextDisabled: true,
       };
 
-    case "backButton":
+    case "enableNextButton":
       return {
         ...state,
         isNextDisabled: false,
@@ -107,37 +107,37 @@ export const ContextProvider = ({ children }) => {
   };
 
   function updatePersonalInfo(info) {
-    dispatch({ type: "personalInfo", payload: info });
+    dispatch({ type: "updatePersonalInfo", payload: info });
   }
 
   function updateAddressInfo(info) {
-    dispatch({ type: "addressInfo", payload: info });
+    dispatch({ type: "updateAddressInfo", payload: info });
   }
 
   function updatePaymentInfo(info) {
-    dispatch({ type: "paymentInfo", payload: info });
+    dispatch({ type: "updatePaymentInfo", payload: info });
   }
 
-  function onNextHandler() {
-    dispatch({ type: "toggleNextButton" });
+  function goToNextStep() {
+    dispatch({ type: "goToNextStep" });
   }
 
-  const onForwardHandler = useCallback(() => {
-    dispatch({ type: "nextButton" });
+  const disableNextButton = useCallback(() => {
+    dispatch({ type: "disableNextButton" });
   }, []);
 
-  const onBackButtonClicked1 = useCallback(() => {
-    dispatch({ type: "backButton" });
+  const enableNextButton = useCallback(() => {
+    dispatch({ type: "enableNextButton" });
   }, []);
 
-  function onBackHandler() {
-    dispatch({ type: "toggleBackButton" });
+  function goToPreviousStep() {
+    dispatch({ type: "goToPreviousStep" });
   }
 
   useData({
     state,
-    onForwardHandler,
-    onBackButtonClicked1,
+    disableNextButton,
+    enableNextButton,
   });
 
   useEffect(() => {
@@ -154,8 +154,8 @@ export const ContextProvider = ({ children }) => {
         updatePersonalInfo,
         updateAddressInfo,
         updatePaymentInfo,
-        onNextHandler,
-        onBackHandler,
+        goToNextStep,
+        goToPreviousStep,
       }}
     >
       {children}

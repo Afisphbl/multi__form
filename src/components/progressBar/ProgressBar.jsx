@@ -4,14 +4,16 @@ import ToggleTheme from "../toggleTheme/ToggleTheme";
 import "./ProgressBar.css";
 
 function ProgressBar() {
-  const { step } = useContextApi();
-  const widthLength = 25 * step;
+  const {
+    state: { step },
+  } = useContextApi();
+  const progressWidth = 25 * step;
   return (
     <section className="progress-container">
       <ToggleTheme />
       <div className="progress-bar-wrapper">
         <div
-          style={{ width: `${widthLength}%` }}
+          style={{ width: `${progressWidth}%` }}
           className="progress-bar-fill"
         ></div>
       </div>

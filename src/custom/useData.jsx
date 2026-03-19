@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 
 export function useData({
-  onForwardHandler,
-  onBackButtonClicked1,
-  state: { personalInfo1, addressInfo1, paymentInfo1, step },
+  disableNextButton,
+  enableNextButton,
+  state: { personalInfo, addressInfo, paymentInfo, step },
 }) {
   useEffect(() => {
-    const { firstName, lastName, email, phone } = personalInfo1;
-    const { country, city, street, zipcode } = addressInfo1;
-    const { cardHolderName, cardNumber, expiryDate, cvv } = paymentInfo1;
+    const { firstName, lastName, email, phone } = personalInfo;
+    const { country, city, street, zipcode } = addressInfo;
+    const { cardHolderName, cardNumber, expiryDate, cvv } = paymentInfo;
 
     if (step === 1) {
       if (
@@ -23,15 +23,15 @@ export function useData({
         phone.length === 10 &&
         Number(phone)
       ) {
-        onBackButtonClicked1();
+        enableNextButton();
       } else {
-        onForwardHandler();
+        disableNextButton();
       }
     } else if (step === 2) {
       if (country && city && street && zipcode && Number(zipcode)) {
-        onBackButtonClicked1();
+        enableNextButton();
       } else {
-        onForwardHandler();
+        disableNextButton();
       }
     } else if (step === 3) {
       if (
@@ -44,21 +44,21 @@ export function useData({
         cvv.length === 3 &&
         Number(cvv)
       ) {
-        onBackButtonClicked1();
+        enableNextButton();
       } else {
-        onForwardHandler();
+        disableNextButton();
       }
     } else {
-      onForwardHandler();
+      disableNextButton();
     }
   }, [
     step,
-    personalInfo1,
-    addressInfo1,
-    paymentInfo1,
-    onForwardHandler,
-    onBackButtonClicked1,
+    personalInfo,
+    addressInfo,
+    paymentInfo,
+    disableNextButton,
+    enableNextButton,
   ]);
 
-  return { state: { personalInfo1, addressInfo1, paymentInfo1, step } };
+  return { state: { personalInfo, addressInfo, paymentInfo, step } };
 }

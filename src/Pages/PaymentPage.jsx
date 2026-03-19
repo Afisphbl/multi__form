@@ -1,24 +1,24 @@
 import React from "react";
 import { useInput } from "../custom/useInput";
-import { PAYMENT_INFO_DATA } from "../data/Data";
+import { PAYMENT_FIELDS } from "../data/Data";
 import { useContextApi } from "../context/useContextApi";
 import InputField from "../components/Input/InputField";
 
 function PaymentPage() {
   const {
-    state: { paymentInfo1 },
+    state: { paymentInfo },
     updatePaymentInfo,
   } = useContextApi();
   const { handleInputChange } = useInput(updatePaymentInfo);
   return (
     <>
       <h2>Payment Information</h2>
-      {PAYMENT_INFO_DATA.map((input) => (
+      {PAYMENT_FIELDS.map((field) => (
         <InputField
-          key={input.id}
-          {...input}
-          value={paymentInfo1[input.id]}
-          onChange={(e) => handleInputChange(e, input.id)}
+          key={field.id}
+          {...field}
+          value={paymentInfo[field.id]}
+          onChange={(event) => handleInputChange(event, field.id)}
         />
       ))}
     </>

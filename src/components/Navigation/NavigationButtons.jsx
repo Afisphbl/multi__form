@@ -5,7 +5,7 @@ import "./NavigationButtons.css";
 function NavigationButtons({
   onNext,
   onBack,
-  isVisible,
+  isBackButtonVisible,
   isNextDisabled,
   step,
 }) {
@@ -14,7 +14,7 @@ function NavigationButtons({
       <Button
         className="btn-back"
         onClick={onBack}
-        style={{ visibility: isVisible ? "visible" : "hidden" }}
+        style={{ visibility: isBackButtonVisible ? "visible" : "hidden" }}
       >
         Back
       </Button>

@@ -4,7 +4,7 @@ import "./Summary.css";
 
 function Summary() {
   const {
-    state: { personalInfo1, addressInfo1, paymentInfo1 },
+    state: { personalInfo, addressInfo, paymentInfo },
   } = useContextApi();
 
   return (
@@ -13,44 +13,44 @@ function Summary() {
       <div className="summary-section">
         <h3>Personal Information</h3>
         <p>
-          <strong>Name:</strong> {personalInfo1.firstName}{" "}
-          {personalInfo1.lastName}
+          <strong>Name:</strong> {personalInfo.firstName}{" "}
+          {personalInfo.lastName}
         </p>
         <p>
-          <strong>Email:</strong> {personalInfo1.email}
+          <strong>Email:</strong> {personalInfo.email}
         </p>
         <p>
-          <strong>Phone:</strong> {personalInfo1.phone}
+          <strong>Phone:</strong> {personalInfo.phone}
         </p>
       </div>
 
       <div className="summary-section">
         <h3>Address Information</h3>
         <p>
-          <strong>Country:</strong> {addressInfo1.country}
+          <strong>Country:</strong> {addressInfo.country}
         </p>
         <p>
-          <strong>City:</strong> {addressInfo1.city}
+          <strong>City:</strong> {addressInfo.city}
         </p>
         <p>
-          <strong>Street:</strong> {addressInfo1.street}
+          <strong>Street:</strong> {addressInfo.street}
         </p>
         <p>
-          <strong>Zipcode:</strong> {addressInfo1.zipcode}
+          <strong>Zipcode:</strong> {addressInfo.zipcode}
         </p>
       </div>
 
       <div className="summary-section">
         <h3>Payment Information</h3>
         <p>
-          <strong>Card Holder Name:</strong> {paymentInfo1.cardHolderName}
+          <strong>Card Holder Name:</strong> {paymentInfo.cardHolderName}
         </p>
         <p>
           <strong>Card Number:</strong> **** **** ****{" "}
-          {paymentInfo1.cardNumber.slice(-4)}
+          {paymentInfo.cardNumber.slice(-4)}
         </p>
         <p>
-          <strong>Expiry Date:</strong> {paymentInfo1.expiryDate}
+          <strong>Expiry Date:</strong> {paymentInfo.expiryDate}
         </p>
       </div>
     </div>

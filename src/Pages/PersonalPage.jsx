@@ -1,12 +1,12 @@
 import React from "react";
 import { useInput } from "../custom/useInput";
-import { PersonalInfoData } from "../data/Data";
+import { PERSONAL_INFO_FIELDS } from "../data/Data";
 import { useContextApi } from "../context/useContextApi";
 import InputField from "../components/Input/InputField";
 
 function PersonalPage() {
   const {
-    state: { personalInfo1 },
+    state: { personalInfo },
     updatePersonalInfo,
   } = useContextApi();
   const { handleInputChange } = useInput(updatePersonalInfo);
@@ -14,12 +14,12 @@ function PersonalPage() {
   return (
     <>
       <h2>Personal Information</h2>
-      {PersonalInfoData.map((input) => (
+      {PERSONAL_INFO_FIELDS.map((field) => (
         <InputField
-          key={input.id}
-          {...input}
-          value={personalInfo1[input.id]}
-          onChange={(e) => handleInputChange(e, input.id)}
+          key={field.id}
+          {...field}
+          value={personalInfo[field.id]}
+          onChange={(event) => handleInputChange(event, field.id)}
         />
       ))}
     </>

@@ -11,16 +11,16 @@ import Summary from "./Pages/Summary";
 function App() {
   const {
     state: { step, isNextDisabled },
-    onNextHandler,
-    onBackHandler,
+    goToNextStep,
+    goToPreviousStep,
   } = useContextApi();
-  const [isBackVisible, setIsBackVisible] = useState(false);
+  const [isBackButtonVisible, setIsBackButtonVisible] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     navigate(`/step-${step}`);
 
-    step === 1 ? setIsBackVisible(false) : setIsBackVisible(true);
+    setIsBackButtonVisible(step !== 1);
   }, [step, navigate]);
 
   return (
@@ -34,10 +34,10 @@ function App() {
           <Route path="/step-4" element={<Summary />} />
         </Routes>
         <NavigationButtons
-          isVisible={isBackVisible}
+          isBackButtonVisible={isBackButtonVisible}
           isNextDisabled={isNextDisabled}
-          onNext={onNextHandler}
-          onBack={onBackHandler}
+          onNext={goToNextStep}
+          onBack={goToPreviousStep}
           step={step}
         />
       </main>

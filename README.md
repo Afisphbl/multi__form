@@ -1,136 +1,183 @@
-# Multi-Step Form Website
+# Multi Form
 
-A responsive multi-step form built with React, React Router, and Context API.
+A professional multi-step form application built with React, React Router, and Context API. The app guides users through a structured data-entry flow with validation, navigation controls, theme switching, and a final review page.
 
-The app guides users through:
+## Table of Contents
 
-1. Personal information
-2. Address information
-3. Payment information
-4. Final summary
+- Project Overview
+- Live Flow
+- Core Features
+- Validation Rules
+- Architecture
+- Tech Stack
+- Project Structure
+- Getting Started
+- Available Scripts
+- Owner and Repository
+- Roadmap
 
-It also includes a light/dark theme toggle with persistence via `localStorage`.
+## Project Overview
 
-## Features
+This project collects user details across four steps:
 
-- Four-step form flow with route-based pages (`/step-1` to `/step-4`)
-- Shared state management using React Context
-- Dynamic progress bar and active step indicators
-- Step-by-step validation that enables/disables the `Next` button
-- Back/Next navigation controls
-- Final summary view with masked card number
-- Theme toggle (`light` / `dark`) saved in `localStorage`
-- Responsive card layout and animated UI transitions
+1. Personal Information
+2. Address Information
+3. Payment Information
+4. Summary
+
+The interface is designed to be responsive and user-friendly, with clear progression indicators and controlled navigation between steps.
+
+## Live Flow
+
+- Step 1 route: /step-1
+- Step 2 route: /step-2
+- Step 3 route: /step-3
+- Step 4 route: /step-4
+
+The app automatically navigates according to the current step in global state.
+
+## Core Features
+
+- Multi-step route-based form workflow
+- Global state management with Context and reducer
+- Dynamic progress bar with active-step highlighting
+- Per-step validation and controlled Next button enable/disable
+- Back and Next navigation controls
+- Final summary page with masked card number display
+- Light and dark theme toggle persisted in local storage
+- Reusable form input and button components
 
 ## Validation Rules
 
-- Step 1 (Personal):
+### Step 1: Personal Information
 
-1. `firstName` and `lastName` must be at least 3 characters
-2. `email` must include `@` and end with `.com`
-3. `phone` must be numeric and 10 digits
+- First name and last name must each be at least 3 characters
+- Email must include @ and end with .com
+- Phone must be numeric and exactly 10 digits
 
-- Step 2 (Address):
+### Step 2: Address Information
 
-1. `country`, `city`, and `street` are required
-2. `zipcode` is required and must be numeric
+- Country, city, and street are required
+- Zip code is required and must be numeric
 
-- Step 3 (Payment):
+### Step 3: Payment Information
 
-1. `cardHolderName` must match `firstName + " " + lastName`
-2. `cardNumber` must be numeric and 16 digits
-3. `expiryDate` is required
-4. `cvv` must be numeric and 3 digits
+- Card holder name must match first name + last name
+- Card number must be numeric and exactly 16 digits
+- Expiry date is required
+- CVV must be numeric and exactly 3 digits
+
+## Architecture
+
+### State Layer
+
+- Context provider stores:
+  - Form data sections
+  - Current step
+  - Next button state
+  - Theme
+- Reducer handles all state transitions using explicit action types
+
+### Validation Layer
+
+- Custom hook validates active step inputs
+- Validation drives next-button availability
+
+### Presentation Layer
+
+- Page components render each step
+- Shared input, navigation, progress, and theme components keep the UI modular
 
 ## Tech Stack
 
-- React
-- React Router DOM
-- Context API + custom hooks
-- Create React App (`react-scripts`)
-- CSS modules/files for component styling
+- React 19
+- React Router DOM 6
+- Context API and custom React hooks
+- Create React App tooling via react-scripts
+- Plain CSS modules/files for styling
 
 ## Project Structure
 
 ```text
-src/
-	App.jsx
-	index.jsx
-	index.css
-	context/
-		useContextApi.jsx
-	custom/
-		useData.jsx
-		useInput.jsx
-	data/
-		Data.jsx
-	Pages/
-		PersonalPage.jsx
-		AddressPage.jsx
-		PaymentPage.jsx
-		Summary.jsx
-		Summary.css
-	components/
-		Input/
-			InputField.jsx
-			InputField.css
-		Navigation/
-			NavigationButtons.jsx
-			NavigationButtons.css
-		progressBar/
-			ProgressBar.jsx
-			ProgressBar.css
-		toggleTheme/
-			ToggleTheme.jsx
-			ThemeToggle.css
-		button/
-			Button.jsx
+multi__form/
+	public/
+		index.html
+	src/
+		App.jsx
+		index.css
+		index.jsx
+		components/
+			button/
+				Button.jsx
+			Input/
+				InputField.css
+				InputField.jsx
+			Navigation/
+				NavigationButtons.css
+				NavigationButtons.jsx
+			progressBar/
+				ProgressBar.css
+				ProgressBar.jsx
+			toggleTheme/
+				ThemeToggle.css
+				ToggleTheme.jsx
+		context/
+			useContextApi.jsx
+		custom/
+			useData.jsx
+			useInput.jsx
+		data/
+			Data.jsx
+		Pages/
+			AddressPage.jsx
+			PaymentPage.jsx
+			PersonalPage.jsx
+			Summary.css
+			Summary.jsx
+	package.json
+	README.md
 ```
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
-- npm 9+
+- Node.js 18 or higher
+- npm 9 or higher
 
-### Install Dependencies
+### Installation
 
 ```bash
 npm install
 ```
 
-### Run Development Server
+### Run in Development
 
 ```bash
 npm start
 ```
 
-App runs at `http://localhost:3000`.
+Application URL:
 
-## Scripts
+http://localhost:3000
 
-- `npm start`: Start development server
-- `npm run build`: Create production build
-- `npm test`: Run tests in watch mode
-- `npm run eject`: Eject CRA configuration
+## Available Scripts
 
-## How It Works
+- npm start: Runs the app in development mode
+- npm run build: Builds the app for production
+- npm test: Runs tests in interactive watch mode
+- npm run eject: Ejects Create React App configuration
 
-- `ContextProvider` stores form data, current step, theme, and navigation actions.
-- `useData` validates the current step and controls the `Next` button state.
-- `App.jsx` listens to `step` and navigates to the corresponding route.
-- Input pages render fields from `src/data/Data.jsx` to keep form definitions centralized.
-- `Summary.jsx` displays all entered values, masking card number except last 4 digits.
+## Owner and Repository
 
-## Notes
+- Owner:Abduselam Seid aka(Afis)
+- Repository: https://github.com/Afisphbl/multi__form
+- Clone URL: https://github.com/Afisphbl/multi__form.git
 
-- Theme is applied using a `data-theme` attribute on the root element.
-- The `Back` button is hidden on step 1 and `Next` is hidden on step 4.
+## Roadmap
 
-## Future Improvements
-
-- Add field-level error messages (not just disabled `Next`)
-- Support more flexible email validation patterns
-- Add persistence for form data across page refresh
-- Add unit/integration tests for validation and navigation
+- Add inline field-level validation messages
+- Add stronger email and phone validation patterns
+- Persist form progress in storage for resume support
+- Add unit and integration tests for reducer, hooks, and page flow
+- Improve accessibility with additional ARIA labels and keyboard behavior checks

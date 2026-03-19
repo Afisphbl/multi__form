@@ -9,8 +9,12 @@ import PaymentPage from "./Pages/PaymentPage";
 import Summary from "./Pages/Summary";
 
 function App() {
-  const { isNextDisabled, step, onNextHandler, onBackHandler } =
-    useContextApi();
+  const {
+    state: { isNextDisabled },
+    step,
+    onNextHandler,
+    onBackHandler,
+  } = useContextApi();
   const [isBackVisible, setIsBackVisible] = useState(false);
   const navigate = useNavigate();
 

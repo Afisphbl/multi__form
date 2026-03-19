@@ -2,7 +2,8 @@ import { useEffect } from "react";
 
 export function useData({
   step,
-  setIsNextDisabled,
+  onForwardHandler,
+  onBackButtonClicked1,
   state: { personalInfo1, addressInfo1, paymentInfo1 },
 }) {
   useEffect(() => {
@@ -23,15 +24,15 @@ export function useData({
         phone.length === 10 &&
         Number(phone)
       ) {
-        setIsNextDisabled(false);
+        onBackButtonClicked1();
       } else {
-        setIsNextDisabled(true);
+        onForwardHandler();
       }
     } else if (step === 2) {
       if (country && city && street && zipcode && Number(zipcode)) {
-        setIsNextDisabled(false);
+        onBackButtonClicked1();
       } else {
-        setIsNextDisabled(true);
+        onForwardHandler();
       }
     } else if (step === 3) {
       if (
@@ -44,14 +45,21 @@ export function useData({
         cvv.length === 3 &&
         Number(cvv)
       ) {
-        setIsNextDisabled(false);
+        onBackButtonClicked1();
       } else {
-        setIsNextDisabled(true);
+        onForwardHandler();
       }
     } else {
-      setIsNextDisabled(true);
+      onForwardHandler();
     }
-  }, [step, personalInfo1, addressInfo1, paymentInfo1, setIsNextDisabled]);
+  }, [
+    step,
+    personalInfo1,
+    addressInfo1,
+    paymentInfo1,
+    onForwardHandler,
+    onBackButtonClicked1,
+  ]);
 
-  return { setIsNextDisabled, step };
+  return { step };
 }

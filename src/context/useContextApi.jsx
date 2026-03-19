@@ -1,5 +1,6 @@
 import React, {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useReducer,
@@ -14,38 +15,66 @@ const initialState = {
   addressInfo1: { country: "", city: "", street: "", zipcode: "" },
 
   paymentInfo1: { cardHolderName: "", cardNumber: "", expiryDate: "", cvv: "" },
+
+  isNextDisabled: true,
 };
 const DataContext = createContext();
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "personalInfo":
-      return {
-        ...state,
-        personalInfo1: {
-          ...state.personalInfo1,
-          ...action.payload,
-        },
+    case "personalInfo": {
+      const updatedPersonalInfo = {
+        ...state.personalInfo1,
+        ...action.payload,
       };
 
-    case "addressInfo":
       return {
         ...state,
-        addressInfo1: {
-          ...state.addressInfo1,
-          ...action.payload,
-        },
+        personalInfo1: updatedPersonalInfo,
+      };
+    }
+
+    case "addressInfo": {
+      const updatedAddressInfo = {
+        ...state.addressInfo1,
+        ...action.payload,
       };
 
-    case "paymentInfo":
       return {
         ...state,
-        paymentInfo1: {
-          ...state.paymentInfo1,
-          ...action.payload,
-        },
+        addressInfo1: updatedAddressInfo,
+      };
+    }
+
+    case "paymentInfo": {
+      const updatedPaymentInfo = {
+        ...state.paymentInfo1,
+        ...action.payload,
       };
 
+      return {
+        ...state,
+        paymentInfo1: updatedPaymentInfo,
+      };
+    }
+
+    case "toggleNextButton":
+      return {
+        ...state,
+        isNextDisabled: !state.isNextDisabled,
+      };
+
+    case "nextButton":
+      return {
+        ...state,
+        isNextDisabled: true,
+      };
+
+    case "backButton":
+      return {
+        ...state,
+        isNextDisabled: false,
+      };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
@@ -61,7 +90,6 @@ export const ContextProvider = ({ children }) => {
   });
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [isNextDisabled, setIsNextDisabled] = useState(true);
   const [step, setStep] = useState(1);
 
   const toggleTheme = () => {
@@ -80,28 +108,29 @@ export const ContextProvider = ({ children }) => {
     dispatch({ type: "paymentInfo", payload: info });
   }
 
-  function toggleNextButton() {
-    setIsNextDisabled((prevState) => !prevState);
-  }
-
-  function onBackButtonClicked() {
-    setIsNextDisabled(false);
-  }
-
   function onNextHandler() {
     setStep((prevStep) => prevStep + 1);
-    toggleNextButton();
+    dispatch({ type: "toggleNextButton" });
   }
+
+  const onForwardHandler = useCallback(() => {
+    dispatch({ type: "nextButton" });
+  }, []);
+
+  const onBackButtonClicked1 = useCallback(() => {
+    dispatch({ type: "backButton" });
+  }, []);
 
   function onBackHandler() {
     setStep((prevStep) => prevStep - 1);
-    onBackButtonClicked();
+    dispatch({ type: "toggleNextButton" });
   }
 
   useData({
     step,
     state,
-    setIsNextDisabled,
+    onForwardHandler,
+    onBackButtonClicked1,
   });
 
   useEffect(() => {
@@ -113,7 +142,6 @@ export const ContextProvider = ({ children }) => {
     <DataContext.Provider
       value={{
         theme,
-        isNextDisabled,
         step,
         state,
         toggleTheme,

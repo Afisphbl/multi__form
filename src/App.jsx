@@ -7,7 +7,7 @@ import PersonalPage from "./Pages/PersonalPage";
 import AddressPage from "./Pages/AddressPage";
 import PaymentPage from "./Pages/PaymentPage";
 import Summary from "./Pages/Summary";
-import { ThemeProvider } from "./context/ThemeCntext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 function App() {
   const {

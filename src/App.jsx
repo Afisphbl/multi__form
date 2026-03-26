@@ -7,6 +7,7 @@ import PersonalPage from "./Pages/PersonalPage";
 import AddressPage from "./Pages/AddressPage";
 import PaymentPage from "./Pages/PaymentPage";
 import Summary from "./Pages/Summary";
+import { ThemeProvider } from "./context/ThemeCntext";
 
 function App() {
   const {
@@ -24,24 +25,26 @@ function App() {
   }, [step, navigate]);
 
   return (
-    <article className="app-container">
-      <main className="form-card">
-        <ProgressBar />
-        <Routes>
-          <Route path="/step-1" element={<PersonalPage />} />
-          <Route path="/step-2" element={<AddressPage />} />
-          <Route path="/step-3" element={<PaymentPage />} />
-          <Route path="/step-4" element={<Summary />} />
-        </Routes>
-        <NavigationButtons
-          isBackButtonVisible={isBackButtonVisible}
-          isNextDisabled={isNextDisabled}
-          onNext={goToNextStep}
-          onBack={goToPreviousStep}
-          step={step}
-        />
-      </main>
-    </article>
+    <ThemeProvider>
+      <article className="app-container">
+        <main className="form-card">
+          <ProgressBar />
+          <Routes>
+            <Route path="/step-1" element={<PersonalPage />} />
+            <Route path="/step-2" element={<AddressPage />} />
+            <Route path="/step-3" element={<PaymentPage />} />
+            <Route path="/step-4" element={<Summary />} />
+          </Routes>
+          <NavigationButtons
+            isBackButtonVisible={isBackButtonVisible}
+            isNextDisabled={isNextDisabled}
+            onNext={goToNextStep}
+            onBack={goToPreviousStep}
+            step={step}
+          />
+        </main>
+      </article>
+    </ThemeProvider>
   );
 }
 

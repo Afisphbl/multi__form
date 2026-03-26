@@ -92,19 +92,7 @@ const reducer = (state, action) => {
 };
 
 export const ContextProvider = ({ children }) => {
-  const [theme, setTheme] = useState(() => {
-    const storedTheme = localStorage.getItem("theme");
-
-    if (storedTheme) return JSON.parse(storedTheme);
-
-    return "light";
-  });
-
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-  };
 
   function updatePersonalInfo(info) {
     dispatch({ type: "updatePersonalInfo", payload: info });
@@ -140,17 +128,10 @@ export const ContextProvider = ({ children }) => {
     enableNextButton,
   });
 
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", JSON.stringify(theme));
-  }, [theme]);
-
   return (
     <DataContext.Provider
       value={{
-        theme,
         state,
-        toggleTheme,
         updatePersonalInfo,
         updateAddressInfo,
         updatePaymentInfo,

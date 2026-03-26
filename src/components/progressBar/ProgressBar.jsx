@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useContextApi } from "../../context/useContextApi";
 import ToggleTheme from "../toggleTheme/ToggleTheme";
 import "./ProgressBar.css";
@@ -41,4 +41,4 @@ function ProgressBar() {
   );
 }
 
-export default ProgressBar;
+export default memo(ProgressBar);
